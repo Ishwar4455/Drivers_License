@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbDriversLicenseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblDriversLicenseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="License_number" Type="nvarchar" MaxLength="20" />
+          <Property Name="Issue_date" Type="datetime" />
+          <Property Name="Expiry_date" Type="datetime" />
+          <Property Name="PersonId" Type="int" />
+          <Property Name="LicenseTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblLicenseTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LicenseTypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblPersonDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_tblDriversLicenseDetail_tblLicenseTypes">
+          <End Role="tblLicenseTypes" Type="Self.tblLicenseTypes" Multiplicity="1" />
+          <End Role="tblDriversLicenseDetail" Type="Self.tblDriversLicenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLicenseTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDriversLicenseDetail">
+              <PropertyRef Name="LicenseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDriversLicenseDetail_tblPersonDetail">
+          <End Role="tblPersonDetail" Type="Self.tblPersonDetail" Multiplicity="0..1" />
+          <End Role="tblDriversLicenseDetail" Type="Self.tblDriversLicenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPersonDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDriversLicenseDetail">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbDriversLicenseModelStoreContainer">
+          <EntitySet Name="tblDriversLicenseDetail" EntityType="Self.tblDriversLicenseDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLicenseTypes" EntityType="Self.tblLicenseTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPersonDetail" EntityType="Self.tblPersonDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblDriversLicenseDetail_tblLicenseTypes" Association="Self.FK_tblDriversLicenseDetail_tblLicenseTypes">
+            <End Role="tblLicenseTypes" EntitySet="tblLicenseTypes" />
+            <End Role="tblDriversLicenseDetail" EntitySet="tblDriversLicenseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDriversLicenseDetail_tblPersonDetail" Association="Self.FK_tblDriversLicenseDetail_tblPersonDetail">
+            <End Role="tblPersonDetail" EntitySet="tblPersonDetail" />
+            <End Role="tblDriversLicenseDetail" EntitySet="tblDriversLicenseDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbDriversLicenseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblDriversLicenseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="License_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Issue_date" Type="DateTime" Precision="3" />
+          <Property Name="Expiry_date" Type="DateTime" Precision="3" />
+          <Property Name="PersonId" Type="Int32" />
+          <NavigationProperty Name="tblPersonDetail" Relationship="Self.FK_tblDriversLicenseDetail_tblPersonDetail" FromRole="tblDriversLicenseDetail" ToRole="tblPersonDetail" />
+          <Property Name="LicenseTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblLicenseType" Relationship="dbDriversLicenseModel.FK_tblDriversLicenseDetail_tblLicenseTypes" FromRole="tblDriversLicenseDetail" ToRole="tblLicenseType" />
+        </EntityType>
+        <EntityType Name="tblPersonDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblDriversLicenseDetails" Relationship="Self.FK_tblDriversLicenseDetail_tblPersonDetail" FromRole="tblPersonDetail" ToRole="tblDriversLicenseDetail" />
+        </EntityType>
+        <Association Name="FK_tblDriversLicenseDetail_tblPersonDetail">
+          <End Role="tblPersonDetail" Type="Self.tblPersonDetail" Multiplicity="0..1" />
+          <End Role="tblDriversLicenseDetail" Type="Self.tblDriversLicenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPersonDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDriversLicenseDetail">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbDriversLicenseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblDriversLicenseDetails" EntityType="Self.tblDriversLicenseDetail" />
+          <EntitySet Name="tblPersonDetails" EntityType="Self.tblPersonDetail" />
+          <AssociationSet Name="FK_tblDriversLicenseDetail_tblPersonDetail" Association="Self.FK_tblDriversLicenseDetail_tblPersonDetail">
+            <End Role="tblPersonDetail" EntitySet="tblPersonDetails" />
+            <End Role="tblDriversLicenseDetail" EntitySet="tblDriversLicenseDetails" />
+          </AssociationSet>
+          <EntitySet Name="tblLicenseTypes" EntityType="dbDriversLicenseModel.tblLicenseType" />
+          <AssociationSet Name="FK_tblDriversLicenseDetail_tblLicenseTypes" Association="dbDriversLicenseModel.FK_tblDriversLicenseDetail_tblLicenseTypes">
+            <End Role="tblLicenseType" EntitySet="tblLicenseTypes" />
+            <End Role="tblDriversLicenseDetail" EntitySet="tblDriversLicenseDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblLicenseType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LicenseTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblDriversLicenseDetails" Relationship="dbDriversLicenseModel.FK_tblDriversLicenseDetail_tblLicenseTypes" FromRole="tblLicenseType" ToRole="tblDriversLicenseDetail" />
+        </EntityType>
+        <Association Name="FK_tblDriversLicenseDetail_tblLicenseTypes">
+          <End Type="dbDriversLicenseModel.tblLicenseType" Role="tblLicenseType" Multiplicity="1" />
+          <End Type="dbDriversLicenseModel.tblDriversLicenseDetail" Role="tblDriversLicenseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLicenseType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDriversLicenseDetail">
+              <PropertyRef Name="LicenseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbDriversLicenseModelStoreContainer" CdmEntityContainer="dbDriversLicenseEntities">
+          <EntitySetMapping Name="tblDriversLicenseDetails">
+            <EntityTypeMapping TypeName="dbDriversLicenseModel.tblDriversLicenseDetail">
+              <MappingFragment StoreEntitySet="tblDriversLicenseDetail">
+                <ScalarProperty Name="LicenseTypeId" ColumnName="LicenseTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="License_number" ColumnName="License_number" />
+                <ScalarProperty Name="Issue_date" ColumnName="Issue_date" />
+                <ScalarProperty Name="Expiry_date" ColumnName="Expiry_date" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPersonDetails">
+            <EntityTypeMapping TypeName="dbDriversLicenseModel.tblPersonDetail">
+              <MappingFragment StoreEntitySet="tblPersonDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLicenseTypes">
+            <EntityTypeMapping TypeName="dbDriversLicenseModel.tblLicenseType">
+              <MappingFragment StoreEntitySet="tblLicenseTypes">
+                <ScalarProperty Name="LicenseTypeName" ColumnName="LicenseTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

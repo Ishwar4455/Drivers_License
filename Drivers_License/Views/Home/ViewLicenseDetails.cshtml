@@ -1,0 +1,70 @@
+﻿@model Drivers_License.Models.ViewPersonLicenseModel
+@{
+    ViewBag.Title = "ViewLicenseDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <h2>View Persons License Detail</h2>
+        <hr />
+        <table style="width:100%">
+            <tr>
+                <th></th>
+                <th style="background-color: #bec2c5;padding:10px">
+                    First Name
+                </th>
+                <th style="background-color: #9999FF;padding:10px">
+                    Last Name
+                </th>
+                <th style="background-color: #bec2c5;padding:10px">
+                    Address
+                </th>
+                <th style="background-color: #9999FF;padding:10px">
+                    Phone Number
+                </th>
+                <th style="background-color: #bec2c5;padding:10px">
+                    License Number
+                </th>
+                <th style="background-color: #9999FF;padding:10px">
+                    License Type
+                </th>
+            </tr>
+           
+            @{ foreach (var item in Model.lst)
+                {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PersonId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PersonId })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicenseNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicenseType)
+                </td>
+            </tr>
+                }
+            }
+        </table>
+        <p></p>
+        @*<p style="font-size:16px">
+            @Html.ActionLink("Add New Record", "Index")
+        </p>*@
+    </div>
+</div>
+
